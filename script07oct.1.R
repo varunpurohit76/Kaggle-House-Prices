@@ -26,14 +26,18 @@ for(i in 1:76){
   }
 }
 
+submission<- data.frame(Id=test$Id)
+
+train$Id<-NULL
+test$Id<-NULL
+
 train[is.na(train)]<-0
 test[is.na(test)]<-0
 Num[is.na(Num)]<-0
 
 rf <- randomForest(SalePrice~.,
                    data=train,
-                   ntree=500)
-submission<- data.frame(Id=test$Id)
+                   ntree=100)
 submission$SalePrice <- predict(rf, test)
 
 write.csv(submission, file="script07oct.1.csv", row.names = FALSE)
