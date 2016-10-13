@@ -31,13 +31,22 @@ submission<- data.frame(Id=test$Id)
 train$Id<-NULL
 test$Id<-NULL
 
+test$one<-test$SaleType*test$Foundation
+test$two<-test$LandSlope*test$BsmtQual
+test$GarageCars<-test$GarageCars&test$one*test$two
+
+train$one<-train$SaleType*train$Foundation
+train$two<-train$LandSlope*train$BsmtQual
+train$GarageCars<-train$GarageCars&train$one*train$two
+
+
 train[is.na(train)]<-0
 test[is.na(test)]<-0
 Num[is.na(Num)]<-0
 
 rf <- randomForest(SalePrice~.,
                    data=train,
-                   ntree=2500)
+                   ntree=1000)
 submission$SalePrice <- predict(rf, test)
 
-write.csv(submission, file="script13oct.2.csv", row.names = FALSE)
+write.csv(submission, file="script13oct.3.csv", row.names = FALSE)
