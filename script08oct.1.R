@@ -55,6 +55,7 @@ param <- list(booster="gbtree",
               min_child_weight = 2,
               gamma = 0.01,
               subsample = 0.8)
+
 mod.xgb <- xgboost(data=dtrain, params = param,nrounds = 5000)
 submission$SalePrice <- predict(mod.xgb, newdata = dtest)
 write.csv(submission, file="script08oct.1.csv", row.names = FALSE)
