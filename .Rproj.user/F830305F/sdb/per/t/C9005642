@@ -1,0 +1,20 @@
+{
+    "collab_server" : "",
+    "contents" : "library(randomForest)\n\ntest<-read.csv(\"test.csv\")\ntrain<-read.csv(\"train.csv\")\n\nNum_NA<-sapply(train,function(y)length(which(is.na(y)==T)))\nNA_Count<- data.frame(Item=colnames(train),Count=Num_NA)\n\n#NA_Count\n\ntrain<- train[,-c(7,73,74,75)]\ntest<- test[,-c(7,73,74,75)]\nNum<-sapply(train,is.numeric)\nNum<-train[,Num]\n\nfor(i in 1:77){\n  if(is.factor(train[,i])){\n    train[,i]<-as.integer(train[,i])\n  }\n}\n\n\nfor(i in 1:76){\n  if(is.factor(test[,i])){\n    test[,i]<-as.integer(test[,i])\n  }\n}\n\nsubmission<- data.frame(Id=test$Id)\n\ntrain$Id<-NULL\ntest$Id<-NULL\n\ntrain[is.na(train)]<-0\ntest[is.na(test)]<-0\nNum[is.na(Num)]<-0\n\nrf <- randomForest(SalePrice~.,\n                   data=train,\n                   ntree=100)\nsubmission$SalePrice <- predict(rf, test)\n\nwrite.csv(submission, file=\"script07oct.1.csv\", row.names = FALSE)\n\n#this is the current branch.\n",
+    "created" : 1475937634347.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3490562500",
+    "id" : "C9005642",
+    "lastKnownWriteTime" : 1475938519,
+    "last_content_update" : 1475938519199,
+    "path" : "D:/dev/R/House Prices Advanced Regression Techniques/script07oct.1.R",
+    "project_path" : "script07oct.1.R",
+    "properties" : {
+    },
+    "relative_order" : 1,
+    "source_on_save" : false,
+    "source_window" : "",
+    "type" : "r_source"
+}
