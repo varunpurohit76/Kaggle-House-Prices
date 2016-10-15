@@ -35,17 +35,17 @@ dtest <- xgb.DMatrix(data.matrix(test[,feature.names]))
 param <- list(  objective           = "reg:linear", 
                 booster = "gbtree",
                 eta                 = 0.001,
-                max_depth           = 20,  # changed from default of 6
+                max_depth           = 22,  # changed from default of 6
                 subsample           = 0.6,
                 colsample_bytree    = 0.6,
                 eval_metric         = "auc")
 
 mod <- xgb.train(   params              = param, 
                     data                = dtrain, 
-                    nrounds             = 10000, # changed from 300
+                    nrounds             = 7000, # changed from 300
                     verbose             = 2, 
                     #early.stop.round    = 100,
                     #watchlist           = watchlist,
                     maximize            = TRUE)
 submission$SalePrice <- predict(mod, data.matrix(test[,feature.names]))
-write.csv(submission, file="xgb.5.csv", row.names = FALSE)
+write.csv(submission, file="xgb.9.csv", row.names = FALSE)
